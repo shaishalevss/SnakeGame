@@ -52,6 +52,7 @@ public class Player {
     }
 
     public void draw(Graphics graphics){
+        graphics.setColor(Color.MAGENTA);
         graphics.fillRect(this.x,this.y,this.width,this.height);
     }
 

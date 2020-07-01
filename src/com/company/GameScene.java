@@ -2,12 +2,16 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class GameScene extends JPanel {
 
     private Player player;
     private int width;
     private int height;
+    private List<Apple> appleList;
 
     public GameScene(int x, int y, int width, int height){
         this.setBounds(x,y,width,height);
@@ -23,6 +27,12 @@ public class GameScene extends JPanel {
         PlayerMovement playerMovement = new PlayerMovement();
         this.addKeyListener(playerMovement);
         this.player = new Player(this.width, this.height);
+        this.appleList = new ArrayList<>();
+        Random random = new Random();
+
+        for(int i = 0; i < Defenitions.APPLES; i++){
+            this.appleList.add(new Apple(random.nextInt(this.width),random.nextInt(this.height),Defenitions.APPLE_SIZE,Defenitions.APPLE_SIZE));
+        }
 
         //The main game loop
         new Thread(()->{
@@ -43,6 +53,11 @@ public class GameScene extends JPanel {
                 }
 
                 this.player.draw(graphics);
+
+                for(Apple apple: this.appleList){
+                    apple.draw(graphics);
+                }
+
                 try{
                     Thread.sleep(10);
                 } catch (InterruptedException e){
